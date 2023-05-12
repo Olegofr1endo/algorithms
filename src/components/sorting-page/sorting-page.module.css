@@ -1,0 +1,44 @@
+.content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 48px;
+}
+
+.controls{
+    display: flex;
+    flex-direction: row;
+    height: 60px;
+    width: 980px;
+    justify-content: space-between;
+}
+
+.checkboxes{
+    width: 221px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 40px;
+}
+
+.buttons{
+    width: 707px;
+    display: flex;
+    flex-direction: row;
+    gap: 80px;
+}
+
+.sortButtons{
+    width:422px;
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+}
+
+.result{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    gap: 10px;
+    height: 368px;
+}
