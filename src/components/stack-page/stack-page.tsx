@@ -1,19 +1,20 @@
-import React, {ChangeEvent, useState} from "react";
+import React, {ChangeEvent, useMemo, useState} from "react";
 import styles from "./stack-page.module.css";
 import { Input } from "../ui/input/input";
 import { Button } from "../ui/button/button";
 import { Circle } from "../ui/circle/circle";
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
-import { IStack, TStackNode } from "../../types/data";
 import Stack from "../../utils/classes/stack";
 import { ElementStates } from "../../types/element-states";
 import { SHORT_DELAY_IN_MS } from "../../constants/delays";
 
 export const StackPage: React.FC = () => {
 
-  const [stack, setStack] = useState<IStack<TStackNode<string>>>(new Stack(20));
   const [value, setValue] = useState<string>("");
-  const [refresh, setRefresh] = useState(1)
+  const [refresh, setRefresh] = useState(1);
+  const stack = useMemo(()=>{
+   return new Stack(20)
+  }, [])
 
   const result = stack.store.map((item, index)=>{
     const head = index === stack.store.length - 1 ? "head" : ""
@@ -45,7 +46,8 @@ export const StackPage: React.FC = () => {
   }
 
   const clearStack = () =>{
-    setStack(new Stack(20))
+    stack.clear()
+    setRefresh(refresh+1)
   }
 
   const onChange = (e:ChangeEvent<HTMLInputElement>) => {
