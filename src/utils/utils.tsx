@@ -37,12 +37,12 @@ export const getFibonacciNumbers: (index:number)=>number[] = (index) => {
 // Функции анимации сортировки. в if-блоках направление сортировки
 
 export const selectionSort:(arr:TValueAndStatus<number>[], direction:Direction, setState:React.Dispatch<any>, state:object)=> void = (arr, direction, setState, state) =>{
-    let a = 0;
-    let b = 0;
-    let current: number = 0
+    let a = 0; // Индекс текущего элемента при переборе 
+    let b = 0; // Индекс позиции, на которую встанет найденый элемент 
+    let current: number = 0 // Индекс найденного наименьшего/наимобльшего
     const interval = setInterval(()=>{
 
-        if(a>=arr.length - 1){
+        if(a>=arr.length - 1){ // Условие для перехода на новую итерацию поиска по массиву
             if(direction === Direction.Ascending ? arr[current].value >= arr[a].value : arr[current].value <= arr[a].value){
                 arr[current].status = ElementStates.Default
                 current = a
@@ -57,21 +57,21 @@ export const selectionSort:(arr:TValueAndStatus<number>[], direction:Direction, 
             current = b
             arr[current].status = ElementStates.Changing;
             setState({...state, result: arr})
-        } else if(direction === Direction.Ascending ? arr[current].value >= arr[a].value : arr[current].value <= arr[a].value) {
+        } else if(direction === Direction.Ascending ? arr[current].value >= arr[a].value : arr[current].value <= arr[a].value) { // Условие новом найденном наибольшем/наименьшем
             arr[current].status = ElementStates.Default;
             current = a
             arr[current].status = ElementStates.Changing;
             a++
             arr[a].status = ElementStates.Changing;
             setState({...state, result: arr})
-        } else {
+        } else { // Условие перехода на следующий элемент в текущей итерации 
             arr[a].status = ElementStates.Default;
             a++
             arr[a].status = ElementStates.Changing;
             setState({...state, result: arr})
         }
 
-        if(b >= arr.length - 1){
+        if(b >= arr.length - 1){ // Услвие выхода из цикла
             arr[b-1].status = ElementStates.Modified
             arr[b].status = ElementStates.Modified
             setState({...state, sortDirection: null, result: arr, onSort: false})
@@ -84,12 +84,12 @@ export const selectionSort:(arr:TValueAndStatus<number>[], direction:Direction, 
 export const bubbleSort:(arr:TValueAndStatus<number>[], finishIndex: number, currIndex: number, direction:Direction, setState:React.Dispatch<any>, state:object)=> void = (arr, finishIndex, currIndex, direction, setState, state) =>{
     setTimeout(()=>{
     let next: number = currIndex+1
-    if(finishIndex <= 1){
+    if(finishIndex <= 1){ // Условие выхода из рекурсии
         arr[currIndex].status = ElementStates.Modified
         setState({...state, sortDirection: null , result: arr, onSort: false})
         return
     }
-    if(next >= finishIndex){
+    if(next >= finishIndex){ // Условие для перехода на новую итерацию поиска по массиву
         arr[currIndex].status = ElementStates.Modified
         arr[currIndex - 1].status = ElementStates.Default
         setState({...state, result: arr})
