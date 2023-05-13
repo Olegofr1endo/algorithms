@@ -20,7 +20,7 @@ const initialState:TListState<string> = {
 
 export const ListPage: React.FC = () => {
   const [state, setState] = useState<TListState<string>>(initialState)
-  const [linkedList] = useState(new LinkedList<string>(9, randomArr(1,6,9999)))
+  const [linkedList] = useState(new LinkedList(9, randomArr(1,6,9999)))
   const result = state.result.map((item, index)=>{
     const head = index === 0 ? "head" : ""
     const tail = index === state.result.length - 1 ? "tail" : ""
@@ -45,27 +45,27 @@ export const ListPage: React.FC = () => {
   }
 
   const addToHead = () => {
-    addListElement({...state, value: "", active: ListActive.AddH}, setState, linkedList!, state.result, state.value , 0)
+    addListElement({...state, value: "", active: ListActive.AddH}, setState, linkedList, state.result, state.value , 0)
   }
 
   const addToTail = () => {
-    addListElement({...state, value: "", active: ListActive.AddT}, setState, linkedList!, state.result , state.value, state.result.length)
+    addListElement({...state, value: "", active: ListActive.AddT}, setState, linkedList, state.result , state.value, state.result.length)
   }
 
   const deleteTail = () => {
-    removeListElement({...state, active: ListActive.RemoveT}, setState, linkedList!, state.result, state.result.length - 1)
+    removeListElement({...state, active: ListActive.RemoveT}, setState, linkedList, state.result, state.result.length - 1)
   }
 
   const deleteHead = () => {
-    removeListElement({...state, active: ListActive.RemoveH}, setState, linkedList!, state.result, 0)
+    removeListElement({...state, active: ListActive.RemoveH}, setState, linkedList, state.result, 0)
   }
   
   const deleteByindex = () => {
-    animateDelition({...state, byIndexValue: "", active: ListActive.RemoveI}, setState, linkedList!, Number(state.byIndexValue))
+    animateDelition({...state, byIndexValue: "", active: ListActive.RemoveI}, setState, linkedList, Number(state.byIndexValue))
   }
 
   const addByIndex = () => {
-    animateAddition({...state, byIndexValue:"", value:"", active: ListActive.AddI}, setState, linkedList!, Number(state.byIndexValue), state.value)
+    animateAddition({...state, byIndexValue:"", value:"", active: ListActive.AddI}, setState, linkedList, Number(state.byIndexValue), state.value)
   }
 
   const isAddDisabled = state.value === "" || !!state.active || state.result.length >= linkedList.maxSize;
