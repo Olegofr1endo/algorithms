@@ -13,6 +13,8 @@ export const QueuePage: React.FC = () => {
 
   const [value, setValue] = useState<string>("");
   const [refresh, setRefresh] = useState(1)
+  const [isAdding, setIsAdding] = useState(false);
+  const [isRemoving, setIsRemoving] = useState(false);
   const queue = useMemo(()=> new Queue(7), [])
 
   const result = queue.store.map((item, index)=>{
@@ -30,10 +32,11 @@ export const QueuePage: React.FC = () => {
       return
     }
     const head = {value: value, status: ElementStates.Changing}
+    setIsAdding(true)
     queue.enqueue(head);
     setTimeout(()=>{
       head.status = ElementStates.Default
-      setRefresh(refresh + 1)
+      setIsAdding(false)
     }, SHORT_DELAY_IN_MS)
     setValue("")
   }
@@ -44,10 +47,10 @@ export const QueuePage: React.FC = () => {
       return
     }
     head!.status = ElementStates.Changing
-    setRefresh(refresh + 1)
+    setIsRemoving(true)
     setTimeout(()=>{
       queue.dequeue();
-      setRefresh(refresh + 2)
+      setIsRemoving(false)
     }, SHORT_DELAY_IN_MS)
   }
 
@@ -60,17 +63,17 @@ export const QueuePage: React.FC = () => {
     setValue(e.target.value)
   }
 
-  const isAddDisabled = value === "" || queue.size >= queue.length ? true : false;
+  const isAddDisabled = value === "" || queue.size >= queue.length || isAdding || isRemoving ? true : false;
 
-  const isRemoveAndClearDisabled = queue.store.find(item=> item) ? false : true;
+  const isRemoveAndClearDisabled = !queue.store.find(item=> item) || isAdding || isRemoving ? true : false;
   return (
     <SolutionLayout title="Очередь">
      <div className={styles.content}>
         <div className={styles.controls}>
         <div className={styles.options}>
           <Input onChange={onChange} value={value} maxLength={4} isLimitText={true}/>
-          <Button onClick={addToStack} text="Добавить" disabled={isAddDisabled}/>
-          <Button onClick={removeFromStack} text="Удалить" disabled={isRemoveAndClearDisabled}/>
+          <Button onClick={addToStack} text="Добавить" disabled={isAddDisabled} isLoader={isAdding}/>
+          <Button onClick={removeFromStack} text="Удалить" disabled={isRemoveAndClearDisabled} isLoader={isRemoving}/>
         </div>
         <div className={styles.clear}>
           <Button onClick={clearStack} text="Очистить" disabled={isRemoveAndClearDisabled}/>
