@@ -1,0 +1,29 @@
+.content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 120px;
+}
+
+.controls{
+    max-width: 952px;
+    display: grid;
+    grid-template-columns: minmax(204px, 1fr) repeat(4, 175px);
+    column-gap: 12px;
+    row-gap: 38px;
+}
+
+.result{
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    align-items: center;
+}
+
+.columns24{
+    grid-column: 2/4;
+}
+
+.columns46{
+    grid-column: 4/6;
+}
