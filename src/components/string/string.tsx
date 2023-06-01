@@ -33,7 +33,7 @@ export const StringComponent: React.FC = () => {
 
   useEffect(()=>{
     if(settings.inProgress){
-      reverseString(settings.result, reverseCallback).then((res)=>{
+      reverseString(settings.result, true, reverseCallback).then((res)=>{
         setSettings({...settings, result: res, inProgress: false, string: ""})
       })
     }

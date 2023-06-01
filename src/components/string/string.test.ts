@@ -3,41 +3,41 @@ import { ElementStates } from "../../types/element-states"
 import { reverseString } from "../../utils/utils"
 
 const testArr:TValueAndStatus<string>[] = [
-    {value: "A",status: ElementStates.Default}, 
+    {value: "A", status: ElementStates.Default}, 
     {value: "B", status: ElementStates.Default}, 
     {value: "C", status: ElementStates.Default}, 
     {value: "D", status: ElementStates.Default}
 ]
 
 const testSuccessResult:TValueAndStatus<string>[] = [
-    {value: "D", status: ElementStates.Default},
-    {value: "C", status: ElementStates.Default},
-    {value: "B", status: ElementStates.Default},
-    {value: "A",status: ElementStates.Default}
+    {value: "D", status: ElementStates.Modified},
+    {value: "C", status: ElementStates.Modified},
+    {value: "B", status: ElementStates.Modified},
+    {value: "A", status: ElementStates.Modified}
 ]
 
 describe("String component tests",()=>{
-    it("empty string", ()=>{
-        reverseString([]).then((res)=>{
+    test("empty string", async ()=>{
+        await reverseString([], false).then((res)=>{
             expect(res).toEqual([])
         })
     })
 
-    it("one symbol", ()=>{
-        reverseString([testArr[0]]).then(res=>{
-            expect(res).toEqual([testArr[0]])
+    test("one symbol", async ()=>{
+        await reverseString([testArr[0]], false).then(res=>{
+            expect(res).toEqual([testSuccessResult[3]])
         })
     })
 
-    it("even", ()=>{
-        reverseString(testArr).then(res=>{
+    test("even", async ()=>{
+        await reverseString(testArr, false).then(res=>{
             expect(res).toEqual(testSuccessResult)
         })
     })
 
-    it("uneven", ()=>{
-        reverseString(testArr.slice(1)).then(res=>{
-            expect(res).toEqual(testSuccessResult.slice(1))
+    test("uneven", async ()=>{
+        await reverseString(testArr.slice(1), false).then(res=>{
+            expect(res).toEqual(testSuccessResult.slice(0, 3))
         })
     })
 })
