@@ -16,11 +16,41 @@ export const randomArr: (min:number, max: number, maxNum:number) => string[] = (
     return arr
 }
 
+let delay = async (delay: number)=>{
+    return new Promise((res, rej)=>{
+        setTimeout(res, delay)
+    })
+}
+
 
 const swap: (arr: Array<any>, index1: number, index2: number) => void = (arr, index1, index2) =>{
     let buf = arr[index1];
     arr[index1] = arr[index2]
     arr[index2] = buf
+}
+
+export const reverseString = async (strArr: TValueAndStatus<string>[], callback?: (arr:TValueAndStatus<string>[])=>void) => {
+    if(strArr.length === 0){
+        return strArr
+    }
+    let a = 0;
+    let b = strArr.length - 1;
+    await delay(DELAY_IN_MS)
+    while(a < b){
+        strArr[b].status = ElementStates.Changing;
+        strArr[a].status = ElementStates.Changing;
+        callback && callback(strArr)
+        await delay(DELAY_IN_MS)
+        swap(strArr, a, b)
+        strArr[b].status = ElementStates.Modified;
+        strArr[a].status = ElementStates.Modified;
+        a++;
+        b--
+    }
+    if(a === b){
+        strArr[a].status = ElementStates.Modified
+    }
+    return strArr
 }
 
 export const getFibonacciNumbers: (index:number)=>number[] = (index) => {

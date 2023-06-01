@@ -1,32 +1,31 @@
 import React from "react";
 import { Button } from "./button";
 import { render, screen, fireEvent } from '@testing-library/react';
-
-const renderer = require("react-test-renderer")
+import TestRenderer from "react-test-renderer";
 
 
 const callback = ()=>{
     alert("success")
 }
 
-describe("Button component test", ()=>{
+describe("Button component tests", ()=>{
     it("with text", ()=>{
-        const tree = renderer.create(<Button text="SomeText"/>).toJSON();
+        const tree = TestRenderer.create(<Button text="SomeText"/>).toJSON();
         expect(tree).toMatchSnapshot();
     })
 
     it("without text", ()=>{
-        const tree = renderer.create(<Button/>).toJSON();
+        const tree = TestRenderer.create(<Button/>).toJSON();
         expect(tree).toMatchSnapshot();
     })
 
     it ('onload', ()=>{
-        const tree = renderer.create(<Button isLoader={true}/>).toJSON();
+        const tree = TestRenderer.create(<Button isLoader={true}/>).toJSON();
         expect(tree).toMatchSnapshot();
     })
 
     it('disabled', ()=>{
-        const tree = renderer.create(<Button disabled={true}/>).toJSON();
+        const tree = TestRenderer.create(<Button disabled={true}/>).toJSON();
         expect(tree).toMatchSnapshot();
     })
 
