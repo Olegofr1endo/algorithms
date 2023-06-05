@@ -1,8 +1,6 @@
-import { mainURL } from "../cypress-constants";
-
 describe("routing is working correctly", () => {
   beforeEach(() => {
-    cy.visit(mainURL);
+    cy.visit("/");
   });
 
   it("String route", () => {

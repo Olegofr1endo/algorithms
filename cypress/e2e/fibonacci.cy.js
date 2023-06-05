@@ -1,12 +1,12 @@
 import { SHORT_DELAY_IN_MS } from "../../src/constants/delays";
-import { mainURL } from "../cypress-constants";
 import { checkLoader, checkNoLoader } from "../cypress-utils";
+import { circleSelector } from "../cypress-constants";
 
 const fibList = [1, 1, 2, 3, 5, 8]; // В массив можно внести любое кол-во чисел последовательности Фибоначчи
 
 describe("Fibonacci page works correctly", () => {
   before(() => {
-    cy.visit(`${mainURL}/fibonacci`);
+    cy.visit(`/fibonacci`);
   });
 
   it("button disabled while string is empty", () => {
@@ -23,7 +23,7 @@ describe("Fibonacci page works correctly", () => {
 
     while (step < fibList.length) {
       cy.wait(SHORT_DELAY_IN_MS);
-      cy.get('[data-cypress="circle"]').each((circle, index) => {
+      cy.get(circleSelector).each((circle, index) => {
         cy.get(circle).should("contain", fibList[index]).and("contain", index);
       });
       step++;

@@ -1,9 +1,9 @@
 import { DELAY_IN_MS, SHORT_DELAY_IN_MS } from "../../src/constants/delays";
 import {
-  mainURL,
   defaultColor,
   changingColor,
   modefiedColor,
+  circleBorderSelector,
 } from "../cypress-constants";
 import { checkLoader, checkNoLoader } from "../cypress-utils";
 
@@ -35,7 +35,7 @@ const thirdStep = [
 
 describe("String-page works correctly", () => {
   before(() => {
-    cy.visit(`${mainURL}/recursion`);
+    cy.visit("/recursion");
   });
 
   it("button disabled while string is empty", () => {
@@ -51,7 +51,7 @@ describe("String-page works correctly", () => {
 
     cy.wait(DELAY_IN_MS);
     checkLoader(cy.get("button").eq(1));
-    cy.get("[data-cypress='circle-color']").each((circle, index) => {
+    cy.get(circleBorderSelector).each((circle, index) => {
       cy.get(circle)
         .should("contain", firstStep[index].textContent)
         .and("have.css", "border-color", firstStep[index].color);
@@ -59,7 +59,7 @@ describe("String-page works correctly", () => {
 
     cy.wait(DELAY_IN_MS);
     checkLoader(cy.get("button").eq(1));
-    cy.get("[data-cypress='circle-color']").each((circle, index) => {
+    cy.get(circleBorderSelector).each((circle, index) => {
       cy.get(circle)
         .should("contain", secondStep[index].textContent)
         .and("have.css", "border-color", secondStep[index].color);
@@ -67,7 +67,7 @@ describe("String-page works correctly", () => {
 
     cy.wait(DELAY_IN_MS);
     checkNoLoader(cy.get("button").eq(1));
-    cy.get("[data-cypress='circle-color']").each((circle, index) => {
+    cy.get(circleBorderSelector).each((circle, index) => {
       cy.get(circle)
         .should("contain", thirdStep[index].textContent)
         .and("have.css", "border-color", thirdStep[index].color);

@@ -1,4 +1,9 @@
-import { defaultColor, changingColor, mainURL } from "../cypress-constants";
+import {
+  defaultColor,
+  changingColor,
+  circleBorderSelector,
+  circleSelector,
+} from "../cypress-constants";
 import { SHORT_DELAY_IN_MS } from "../../src/constants/delays";
 import { checkButtonsList, checkLoader, checkNoLoader } from "../cypress-utils";
 
@@ -7,7 +12,7 @@ const queueLength = 7;
 
 describe("Queue-page works correctly", () => {
   before(() => {
-    cy.visit(`${mainURL}/queue`);
+    cy.visit(`/queue`);
   });
 
   it("button disabled while string is empty", () => {
@@ -26,18 +31,18 @@ describe("Queue-page works correctly", () => {
       cy.get("button").eq(1).click();
 
       checkButtonsList(cy.get("button"), 1, checkLoader, "be.disabled");
-      cy.get('[data-cypress="circle"]')
+      cy.get(circleSelector)
         .eq(curIndex)
         .should("contain", "tail")
         .and("contain", curIndex)
         .and("contain", arrayMaxFilled[additionalStep]);
-      cy.get('[data-cypress="circle-color"]')
+      cy.get(circleBorderSelector)
         .eq(curIndex)
         .should("have.css", "border-color", changingColor);
 
       cy.wait(SHORT_DELAY_IN_MS);
       checkButtonsList(cy.get("button"), 1, checkNoLoader, "be.not.disabled");
-      cy.get('[data-cypress="circle-color"]')
+      cy.get(circleBorderSelector)
         .eq(curIndex)
         .should("have.css", "border-color", defaultColor);
 
@@ -49,19 +54,17 @@ describe("Queue-page works correctly", () => {
         cy.get("button").eq(2).click();
         checkButtonsList(cy.get("button"), 2, checkLoader, "be.disabled");
 
-        cy.get('[data-cypress="circle"]')
-          .eq(curIndex)
-          .should("contain", "head");
-        cy.get('[data-cypress="circle-color"]')
+        cy.get(circleSelector).eq(curIndex).should("contain", "head");
+        cy.get(circleBorderSelector)
           .eq(curIndex)
           .should("have.css", "border-color", changingColor);
 
         cy.wait(SHORT_DELAY_IN_MS);
         checkNoLoader(cy.get("button").eq(2));
-        cy.get('[data-cypress="circle-color"]')
+        cy.get(circleBorderSelector)
           .eq(curIndex)
           .should("have.css", "border-color", defaultColor);
-        cy.get('[data-cypress="circle"]')
+        cy.get(circleSelector)
           .eq(curIndex)
           .should("not.contain", curIndex)
           .and("not.contain", "head")
@@ -74,7 +77,7 @@ describe("Queue-page works correctly", () => {
 
   it("clear button works correctly", () => {
     cy.get("button").eq(3).click();
-    cy.get('[data-cypress="circle"]').each((circle, index) => {
+    cy.get(circleSelector).each((circle, index) => {
       cy.get(circle)
         .should("not.contain", index)
         .and("not.contain", "head")

@@ -1,10 +1,8 @@
-import { mainURL } from "../cypress-constants";
-
 // Хотел сделать проверку по сортировке, но никак не могу придумать путь.
 // Упираюсь в то, что не могу получить длинну массива элементов
 describe("Sorting component tests", () => {
   before(() => {
-    cy.visit(`${mainURL}/sorting`);
+    cy.visit(`/sorting`);
   });
 
   it("button states", () => {

@@ -1,12 +1,17 @@
 import { SHORT_DELAY_IN_MS } from "../../src/constants/delays";
-import { defaultColor, changingColor, mainURL } from "../cypress-constants";
+import {
+  defaultColor,
+  changingColor,
+  circleSelector,
+  circleBorderSelector,
+} from "../cypress-constants";
 import { checkButtonsList, checkLoader, checkNoLoader } from "../cypress-utils";
 
 export const arrayMaxFilled = [1, 2, 3];
 
 describe("Stack page works correctly", () => {
   before(() => {
-    cy.visit(`${mainURL}/stack`);
+    cy.visit(`/stack`);
   });
 
   it("button disabled while string is empty", () => {
@@ -22,18 +27,18 @@ describe("Stack page works correctly", () => {
       cy.get("button").eq(1).click();
 
       checkButtonsList(cy.get("button"), 1, checkLoader, "be.disabled");
-      cy.get('[data-cypress="circle"]')
+      cy.get(circleSelector)
         .eq(curStep)
         .should("contain", arrayMaxFilled[curStep])
         .and("contain", "head")
         .and("contain", curStep);
-      cy.get('[data-cypress="circle-color"]')
+      cy.get(circleBorderSelector)
         .eq(curStep)
         .should("have.css", "border-color", changingColor);
 
       cy.wait(SHORT_DELAY_IN_MS);
       checkButtonsList(cy.get("button"), 1, checkNoLoader, "be.not.disabled");
-      cy.get('[data-cypress="circle-color"]')
+      cy.get(circleBorderSelector)
         .eq(curStep)
         .should("have.css", "border-color", defaultColor);
       curStep++;
@@ -45,13 +50,13 @@ describe("Stack page works correctly", () => {
       cy.get("button").eq(2).click();
 
       checkButtonsList(cy.get("button"), 2, checkLoader, "be.disabled");
-      cy.get('[data-cypress="circle-color"]')
+      cy.get(circleBorderSelector)
         .eq(curStep)
         .should("have.css", "border-color", changingColor);
 
       cy.wait(SHORT_DELAY_IN_MS);
       checkNoLoader(cy.get("button").eq(2));
-      cy.get('[data-cypress="circle"]').should("have.length", curStep);
+      cy.get(circleSelector).should("have.length", curStep);
 
       curStep--;
     }
@@ -68,6 +73,6 @@ describe("Stack page works correctly", () => {
     }
 
     cy.get("button").eq(3).click();
-    cy.get('[data-cypress="circle"]').should("have.length", 0);
+    cy.get(circleSelector).should("have.length", 0);
   });
 });

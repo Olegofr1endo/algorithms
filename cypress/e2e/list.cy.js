@@ -2,7 +2,10 @@ import {
   defaultColor,
   changingColor,
   modefiedColor,
-  mainURL,
+  circleHeadSelector,
+  circleBorderSelector,
+  circleTailSelector,
+  circleSelector,
 } from "../cypress-constants";
 import { SHORT_DELAY_IN_MS } from "../../src/constants/delays";
 import { checkLoader, checkNoLoader } from "../cypress-utils";
@@ -12,7 +15,7 @@ const testIndex = 2;
 
 describe("List page works correctly", () => {
   before(() => {
-    cy.visit(`${mainURL}/list`);
+    cy.visit(`/list`);
   });
 
   it("buttons disabled while string is empty", () => {
@@ -28,7 +31,7 @@ describe("List page works correctly", () => {
   });
 
   it("list auto-fill works correctly", () => {
-    cy.get('[data-cypress="circle"]')
+    cy.get(circleSelector)
       .should("have.length.at.least", 3)
       .and("have.length.at.most", 6);
   });
@@ -38,29 +41,27 @@ describe("List page works correctly", () => {
     cy.get("button").eq(1).click();
     checkLoader(cy.get("button").eq(1));
 
-    cy.get('[data-cypress="circle-head"] [data-cypress="circle-color"]')
+    cy.get(`${circleHeadSelector} ${circleBorderSelector}`)
       .should("contain", TestsValue)
       .and("have.css", "border-color", changingColor)
       .and("have.css", "width", "56px")
       .and("have.css", "height", "56px");
 
     cy.wait(SHORT_DELAY_IN_MS);
-    cy.get('[data-cypress="circle"]')
+    cy.get(circleSelector)
       .eq(0)
       .should("contain", TestsValue)
       .and("contain", "head");
 
-    cy.get('[data-cypress="circle-color"]')
+    cy.get(circleBorderSelector)
       .eq(0)
       .should("have.css", "border-color", modefiedColor);
 
-    cy.get('[data-cypress="circle-head"] [data-cypress="circle-color"]').should(
-      "not.exist"
-    );
+    cy.get(`${circleHeadSelector} ${circleBorderSelector}`).should("not.exist");
 
     cy.wait(SHORT_DELAY_IN_MS);
     checkNoLoader(cy.get("button").eq(1));
-    cy.get('[data-cypress="circle-color"]')
+    cy.get(circleBorderSelector)
       .eq(0)
       .should("have.css", "border-color", defaultColor);
   });
@@ -69,18 +70,18 @@ describe("List page works correctly", () => {
     cy.get("button").eq(3).click();
     checkLoader(cy.get("button").eq(3));
 
-    cy.get('[data-cypress="circle-color"]')
+    cy.get(circleBorderSelector)
       .eq(0)
       .should("contain", TestsValue)
       .and("have.css", "border-color", changingColor);
 
     cy.wait(SHORT_DELAY_IN_MS);
-    cy.get('[data-cypress="circle-color"]')
+    cy.get(circleBorderSelector)
       .eq(0)
       .should("not.contain", TestsValue)
       .and("have.css", "border-color", modefiedColor);
 
-    cy.get('[data-cypress="circle-tail"] [data-cypress="circle-color"]')
+    cy.get(`${circleTailSelector} ${circleBorderSelector}`)
       .should("have.css", "border-color", changingColor)
       .and("contain", TestsValue)
       .and("have.css", "width", "56px")
@@ -88,14 +89,12 @@ describe("List page works correctly", () => {
 
     cy.wait(SHORT_DELAY_IN_MS);
     checkNoLoader(cy.get("button").eq(3));
-    cy.get('[data-cypress="circle-tail"] [data-cypress="circle-color"]').should(
-      "not.exist"
-    );
-    cy.get('[data-cypress="circle"]')
+    cy.get(`${circleTailSelector} ${circleBorderSelector}`).should("not.exist");
+    cy.get(circleSelector)
       .eq(0)
       .should("not.contain", TestsValue)
       .and("contain", "head");
-    cy.get('[data-cypress="circle-color"]')
+    cy.get(circleBorderSelector)
       .eq(0)
       .should("have.css", "border-color", defaultColor);
   });
@@ -105,29 +104,27 @@ describe("List page works correctly", () => {
     cy.get("button").eq(2).click();
 
     checkLoader(cy.get("button").eq(2));
-    cy.get('[data-cypress="circle-head"] [data-cypress="circle-color"]')
+    cy.get(`${circleHeadSelector} ${circleBorderSelector}`)
       .should("contain", TestsValue)
       .and("have.css", "border-color", changingColor)
       .and("have.css", "width", "56px")
       .and("have.css", "height", "56px");
 
     cy.wait(SHORT_DELAY_IN_MS);
-    cy.get('[data-cypress="circle"]')
+    cy.get(circleSelector)
       .eq(-1)
       .should("contain", TestsValue)
       .and("contain", "tail");
 
-    cy.get('[data-cypress="circle-color"]')
+    cy.get(circleBorderSelector)
       .eq(-1)
       .should("have.css", "border-color", modefiedColor);
 
-    cy.get('[data-cypress="circle-head"] [data-cypress="circle-color"]').should(
-      "not.exist"
-    );
+    cy.get(`${circleHeadSelector} ${circleBorderSelector}`).should("not.exist");
 
     cy.wait(SHORT_DELAY_IN_MS);
     checkNoLoader(cy.get("button").eq(2));
-    cy.get('[data-cypress="circle-color"]')
+    cy.get(circleBorderSelector)
       .eq(-1)
       .should("have.css", "border-color", defaultColor);
   });
@@ -136,32 +133,30 @@ describe("List page works correctly", () => {
     cy.get("button").eq(4).click();
 
     checkLoader(cy.get("button").eq(4));
-    cy.get('[data-cypress="circle-color"]')
+    cy.get(circleBorderSelector)
       .eq(-1)
       .should("contain", TestsValue)
       .and("have.css", "border-color", changingColor);
 
     cy.wait(SHORT_DELAY_IN_MS);
-    cy.get('[data-cypress="circle-tail"] [data-cypress="circle-color"]')
+    cy.get(`${circleTailSelector} ${circleBorderSelector}`)
       .should("have.css", "border-color", changingColor)
       .and("contain", TestsValue)
       .and("have.css", "width", "56px")
       .and("have.css", "height", "56px");
-    cy.get('[data-cypress="circle-color"]')
+    cy.get(circleBorderSelector)
       .eq(-2)
       .should("not.contain", TestsValue)
       .and("have.css", "border-color", modefiedColor);
 
     cy.wait(SHORT_DELAY_IN_MS);
     checkNoLoader(cy.get("button").eq(4));
-    cy.get('[data-cypress="circle-tail"] [data-cypress="circle-color"]').should(
-      "not.exist"
-    );
-    cy.get('[data-cypress="circle"]')
+    cy.get(`${circleTailSelector} ${circleBorderSelector}`).should("not.exist");
+    cy.get(circleSelector)
       .eq(-1)
       .should("not.contain", TestsValue)
       .and("contain", "tail");
-    cy.get('[data-cypress="circle-color"]')
+    cy.get(circleBorderSelector)
       .eq(-1)
       .should("have.css", "border-color", defaultColor);
   });
@@ -174,11 +169,11 @@ describe("List page works correctly", () => {
 
     while (step < testIndex) {
       for (let i = 0; i <= step + 1; i++) {
-        cy.get('[data-cypress="circle-color"]')
+        cy.get(circleBorderSelector)
           .eq(i)
           .should("have.css", "border-color", changingColor);
       }
-      cy.get('[data-cypress="circle-head"] [data-cypress="circle-color"]')
+      cy.get(`${circleHeadSelector} ${circleBorderSelector}`)
         .should("contain", TestsValue)
         .and("have.css", "width", "56px")
         .and("have.css", "height", "56px");
@@ -188,17 +183,15 @@ describe("List page works correctly", () => {
     }
 
     checkLoader(cy.get("button").eq(5));
-    cy.get('[data-cypress="circle-head"] [data-cypress="circle-color"]').should(
-      "not.exist"
-    );
-    cy.get('[data-cypress="circle-color"]')
+    cy.get(`${circleHeadSelector} ${circleBorderSelector}`).should("not.exist");
+    cy.get(circleBorderSelector)
       .eq(testIndex)
       .should("contain", TestsValue)
       .and("have.css", "border-color", modefiedColor);
 
     cy.wait(SHORT_DELAY_IN_MS);
     checkNoLoader(cy.get("button").eq(5));
-    cy.get('[data-cypress="circle-color"]')
+    cy.get(circleBorderSelector)
       .eq(testIndex)
       .should("have.css", "border-color", defaultColor);
   });
@@ -210,7 +203,7 @@ describe("List page works correctly", () => {
     while (step <= testIndex) {
       checkLoader(cy.get("button").eq(6));
       for (let i = 0; i <= step; i++) {
-        cy.get('[data-cypress="circle-color"]')
+        cy.get(circleBorderSelector)
           .eq(i)
           .should("have.css", "border-color", changingColor);
       }
@@ -218,11 +211,11 @@ describe("List page works correctly", () => {
       cy.wait(SHORT_DELAY_IN_MS);
     }
     checkLoader(cy.get("button").eq(6));
-    cy.get('[data-cypress="circle-color"]')
+    cy.get(circleBorderSelector)
       .eq(step - 1)
       .should("have.css", "border-color", modefiedColor)
       .and("not.contain", TestsValue);
-    cy.get('[data-cypress="circle-tail"] [data-cypress="circle-color"]')
+    cy.get(`${circleTailSelector} ${circleBorderSelector}`)
       .should("have.css", "border-color", changingColor)
       .and("contain", TestsValue)
       .and("have.css", "width", "56px")
@@ -230,7 +223,7 @@ describe("List page works correctly", () => {
 
     cy.wait(SHORT_DELAY_IN_MS);
     checkNoLoader(cy.get("button").eq(6));
-    cy.get('[data-cypress="circle-color"]')
+    cy.get(circleBorderSelector)
       .eq(step - 1)
       .should("have.css", "border-color", defaultColor)
       .and("not.contain", TestsValue);
