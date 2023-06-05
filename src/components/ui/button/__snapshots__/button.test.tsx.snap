@@ -21,6 +21,7 @@ exports[`Button component tests onload 1`] = `
   <img
     alt="Загрузка."
     className="loader_icon"
+    data-cypress="loader"
     src="loader.svg"
   />
 </button>

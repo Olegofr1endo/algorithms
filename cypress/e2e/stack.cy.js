@@ -1,5 +1,6 @@
 import { SHORT_DELAY_IN_MS } from "../../src/constants/delays";
 import { defaultColor, changingColor, mainURL } from "../cypress-constants";
+import { checkButtonsList, checkLoader, checkNoLoader } from "../cypress-utils";
 
 export const arrayMaxFilled = [1, 2, 3];
 
@@ -20,6 +21,7 @@ describe("Stack page works correctly", () => {
       cy.get("input").type(arrayMaxFilled[curStep]);
       cy.get("button").eq(1).click();
 
+      checkButtonsList(cy.get("button"), 1, checkLoader, "be.disabled");
       cy.get('[data-cypress="circle"]')
         .eq(curStep)
         .should("contain", arrayMaxFilled[curStep])
@@ -30,6 +32,7 @@ describe("Stack page works correctly", () => {
         .should("have.css", "border-color", changingColor);
 
       cy.wait(SHORT_DELAY_IN_MS);
+      checkButtonsList(cy.get("button"), 1, checkNoLoader, "be.not.disabled");
       cy.get('[data-cypress="circle-color"]')
         .eq(curStep)
         .should("have.css", "border-color", defaultColor);
@@ -41,11 +44,13 @@ describe("Stack page works correctly", () => {
     while (curStep >= 0) {
       cy.get("button").eq(2).click();
 
+      checkButtonsList(cy.get("button"), 2, checkLoader, "be.disabled");
       cy.get('[data-cypress="circle-color"]')
         .eq(curStep)
         .should("have.css", "border-color", changingColor);
 
       cy.wait(SHORT_DELAY_IN_MS);
+      checkNoLoader(cy.get("button").eq(2));
       cy.get('[data-cypress="circle"]').should("have.length", curStep);
 
       curStep--;

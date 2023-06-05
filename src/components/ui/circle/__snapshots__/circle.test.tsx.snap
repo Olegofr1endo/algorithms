@@ -3,12 +3,15 @@
 exports[`Circle component tests changing 1`] = `
 <div
   className="content "
+  data-cypress="circle"
 >
   <div
     className="text text_type_input text_color_input mb-4 absolute head element"
+    data-cypress="circle-head"
   />
   <div
     className="circle   changing"
+    data-cypress="circle-color"
   >
     <p
       className="text text_type_circle text_color_input letter"
@@ -16,9 +19,11 @@ exports[`Circle component tests changing 1`] = `
   </div>
   <p
     className="text text_type_input text_color_input mt-4 absolute index"
+    data-cypress="circle-index"
   />
   <div
     className="text text_type_input text_color_input mt-4 absolute tail30 element"
+    data-cypress="circle-tail"
   />
 </div>
 `;
@@ -26,12 +31,15 @@ exports[`Circle component tests changing 1`] = `
 exports[`Circle component tests default 1`] = `
 <div
   className="content "
+  data-cypress="circle"
 >
   <div
     className="text text_type_input text_color_input mb-4 absolute head element"
+    data-cypress="circle-head"
   />
   <div
     className="circle   default"
+    data-cypress="circle-color"
   >
     <p
       className="text text_type_circle text_color_input letter"
@@ -39,9 +47,11 @@ exports[`Circle component tests default 1`] = `
   </div>
   <p
     className="text text_type_input text_color_input mt-4 absolute index"
+    data-cypress="circle-index"
   />
   <div
     className="text text_type_input text_color_input mt-4 absolute tail30 element"
+    data-cypress="circle-tail"
   />
 </div>
 `;
@@ -49,12 +59,15 @@ exports[`Circle component tests default 1`] = `
 exports[`Circle component tests modified 1`] = `
 <div
   className="content "
+  data-cypress="circle"
 >
   <div
     className="text text_type_input text_color_input mb-4 absolute head element"
+    data-cypress="circle-head"
   />
   <div
     className="circle   modified"
+    data-cypress="circle-color"
   >
     <p
       className="text text_type_circle text_color_input letter"
@@ -62,9 +75,11 @@ exports[`Circle component tests modified 1`] = `
   </div>
   <p
     className="text text_type_input text_color_input mt-4 absolute index"
+    data-cypress="circle-index"
   />
   <div
     className="text text_type_input text_color_input mt-4 absolute tail30 element"
+    data-cypress="circle-tail"
   />
 </div>
 `;
@@ -72,12 +87,15 @@ exports[`Circle component tests modified 1`] = `
 exports[`Circle component tests small 1`] = `
 <div
   className="content "
+  data-cypress="circle"
 >
   <div
     className="text text_type_input text_color_input mb-4 absolute head element"
+    data-cypress="circle-head"
   />
   <div
     className="circle  small default"
+    data-cypress="circle-color"
   >
     <p
       className="text text_type_circle text_color_input letter"
@@ -85,9 +103,11 @@ exports[`Circle component tests small 1`] = `
   </div>
   <p
     className="text text_type_input text_color_input mt-4 absolute index"
+    data-cypress="circle-index"
   />
   <div
     className="text text_type_input text_color_input mt-4 absolute tail30 element"
+    data-cypress="circle-tail"
   />
 </div>
 `;
@@ -95,9 +115,11 @@ exports[`Circle component tests small 1`] = `
 exports[`Circle component tests with element-head 1`] = `
 <div
   className="content "
+  data-cypress="circle"
 >
   <div
     className="text text_type_input text_color_input mb-4 absolute head element"
+    data-cypress="circle-head"
   >
     <div>
       div-block
@@ -105,6 +127,7 @@ exports[`Circle component tests with element-head 1`] = `
   </div>
   <div
     className="circle   default"
+    data-cypress="circle-color"
   >
     <p
       className="text text_type_circle text_color_input letter"
@@ -112,9 +135,11 @@ exports[`Circle component tests with element-head 1`] = `
   </div>
   <p
     className="text text_type_input text_color_input mt-4 absolute index"
+    data-cypress="circle-index"
   />
   <div
     className="text text_type_input text_color_input mt-4 absolute tail30 element"
+    data-cypress="circle-tail"
   />
 </div>
 `;
@@ -122,12 +147,15 @@ exports[`Circle component tests with element-head 1`] = `
 exports[`Circle component tests with element-tail 1`] = `
 <div
   className="content "
+  data-cypress="circle"
 >
   <div
     className="text text_type_input text_color_input mb-4 absolute head element"
+    data-cypress="circle-head"
   />
   <div
     className="circle   default"
+    data-cypress="circle-color"
   >
     <p
       className="text text_type_circle text_color_input letter"
@@ -135,9 +163,11 @@ exports[`Circle component tests with element-tail 1`] = `
   </div>
   <p
     className="text text_type_input text_color_input mt-4 absolute index"
+    data-cypress="circle-index"
   />
   <div
     className="text text_type_input text_color_input mt-4 absolute tail30 element"
+    data-cypress="circle-tail"
   >
     <div>
       div-block
@@ -149,14 +179,17 @@ exports[`Circle component tests with element-tail 1`] = `
 exports[`Circle component tests with head 1`] = `
 <div
   className="content "
+  data-cypress="circle"
 >
   <div
     className="text text_type_input text_color_input mb-4 absolute head string"
+    data-cypress="circle-head"
   >
     head
   </div>
   <div
     className="circle   default"
+    data-cypress="circle-color"
   >
     <p
       className="text text_type_circle text_color_input letter"
@@ -164,9 +197,11 @@ exports[`Circle component tests with head 1`] = `
   </div>
   <p
     className="text text_type_input text_color_input mt-4 absolute index"
+    data-cypress="circle-index"
   />
   <div
     className="text text_type_input text_color_input mt-4 absolute tail30 element"
+    data-cypress="circle-tail"
   />
 </div>
 `;
@@ -174,12 +209,15 @@ exports[`Circle component tests with head 1`] = `
 exports[`Circle component tests with index 1`] = `
 <div
   className="content "
+  data-cypress="circle"
 >
   <div
     className="text text_type_input text_color_input mb-4 absolute head element"
+    data-cypress="circle-head"
   />
   <div
     className="circle   default"
+    data-cypress="circle-color"
   >
     <p
       className="text text_type_circle text_color_input letter"
@@ -187,11 +225,13 @@ exports[`Circle component tests with index 1`] = `
   </div>
   <p
     className="text text_type_input text_color_input mt-4 absolute index"
+    data-cypress="circle-index"
   >
     0
   </p>
   <div
     className="text text_type_input text_color_input mt-4 absolute tail60 element"
+    data-cypress="circle-tail"
   />
 </div>
 `;
@@ -199,12 +239,15 @@ exports[`Circle component tests with index 1`] = `
 exports[`Circle component tests with letter 1`] = `
 <div
   className="content "
+  data-cypress="circle"
 >
   <div
     className="text text_type_input text_color_input mb-4 absolute head element"
+    data-cypress="circle-head"
   />
   <div
     className="circle   default"
+    data-cypress="circle-color"
   >
     <p
       className="text text_type_circle text_color_input letter"
@@ -214,9 +257,11 @@ exports[`Circle component tests with letter 1`] = `
   </div>
   <p
     className="text text_type_input text_color_input mt-4 absolute index"
+    data-cypress="circle-index"
   />
   <div
     className="text text_type_input text_color_input mt-4 absolute tail30 element"
+    data-cypress="circle-tail"
   />
 </div>
 `;
@@ -224,12 +269,15 @@ exports[`Circle component tests with letter 1`] = `
 exports[`Circle component tests with tail 1`] = `
 <div
   className="content "
+  data-cypress="circle"
 >
   <div
     className="text text_type_input text_color_input mb-4 absolute head element"
+    data-cypress="circle-head"
   />
   <div
     className="circle   default"
+    data-cypress="circle-color"
   >
     <p
       className="text text_type_circle text_color_input letter"
@@ -237,9 +285,11 @@ exports[`Circle component tests with tail 1`] = `
   </div>
   <p
     className="text text_type_input text_color_input mt-4 absolute index"
+    data-cypress="circle-index"
   />
   <div
     className="text text_type_input text_color_input mt-4 absolute tail30 string"
+    data-cypress="circle-tail"
   >
     tail
   </div>
@@ -249,12 +299,15 @@ exports[`Circle component tests with tail 1`] = `
 exports[`Circle component tests without letter 1`] = `
 <div
   className="content "
+  data-cypress="circle"
 >
   <div
     className="text text_type_input text_color_input mb-4 absolute head element"
+    data-cypress="circle-head"
   />
   <div
     className="circle   default"
+    data-cypress="circle-color"
   >
     <p
       className="text text_type_circle text_color_input letter"
@@ -262,9 +315,11 @@ exports[`Circle component tests without letter 1`] = `
   </div>
   <p
     className="text text_type_input text_color_input mt-4 absolute index"
+    data-cypress="circle-index"
   />
   <div
     className="text text_type_input text_color_input mt-4 absolute tail30 element"
+    data-cypress="circle-tail"
   />
 </div>
 `;

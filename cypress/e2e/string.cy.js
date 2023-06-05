@@ -5,6 +5,7 @@ import {
   changingColor,
   modefiedColor,
 } from "../cypress-constants";
+import { checkLoader, checkNoLoader } from "../cypress-utils";
 
 const string = "abcde";
 
@@ -46,13 +47,17 @@ describe("String-page works correctly", () => {
     cy.get("input").type(string);
     cy.get("button").eq(1).click();
 
+    checkLoader(cy.get("button").eq(1));
+
     cy.wait(DELAY_IN_MS);
+    checkLoader(cy.get("button").eq(1));
     cy.get("[data-cypress='circle-color']").each((circle, index) => {
       cy.get(circle).should("contain", firstStep[index].textContent);
       cy.get(circle).should("have.css", "border-color", firstStep[index].color);
     });
 
     cy.wait(DELAY_IN_MS);
+    checkLoader(cy.get("button").eq(1));
     cy.get("[data-cypress='circle-color']").each((circle, index) => {
       cy.get(circle).should("contain", secondStep[index].textContent);
       cy.get(circle).should(
@@ -63,6 +68,7 @@ describe("String-page works correctly", () => {
     });
 
     cy.wait(DELAY_IN_MS);
+    checkNoLoader(cy.get("button").eq(1));
     cy.get("[data-cypress='circle-color']").each((circle, index) => {
       cy.get(circle).should("contain", thirdStep[index].textContent);
       cy.get(circle).should("have.css", "border-color", thirdStep[index].color);

@@ -1,5 +1,6 @@
 import { defaultColor, changingColor, mainURL } from "../cypress-constants";
 import { SHORT_DELAY_IN_MS } from "../../src/constants/delays";
+import { checkButtonsList, checkLoader, checkNoLoader } from "../cypress-utils";
 
 const arrayMaxFilled = [1, 2, 3, 4, 5, 6, 7, 8];
 const queueLength = 7;
@@ -24,6 +25,7 @@ describe("Queue-page works correctly", () => {
       cy.get("input").type(arrayMaxFilled[additionalStep]);
       cy.get("button").eq(1).click();
 
+      checkButtonsList(cy.get("button"), 1, checkLoader, "be.disabled");
       cy.get('[data-cypress="circle"]')
         .eq(curIndex)
         .should("contain", "tail")
@@ -33,6 +35,7 @@ describe("Queue-page works correctly", () => {
         .should("have.css", "border-color", changingColor);
 
       cy.wait(SHORT_DELAY_IN_MS);
+      checkButtonsList(cy.get("button"), 1, checkNoLoader, "be.not.disabled");
       cy.get('[data-cypress="circle-color"]')
         .eq(curIndex)
         .should("have.css", "border-color", defaultColor);
@@ -43,6 +46,7 @@ describe("Queue-page works correctly", () => {
       ) {
         curIndex = removingStep % queueLength;
         cy.get("button").eq(2).click();
+        checkButtonsList(cy.get("button"), 2, checkLoader, "be.disabled");
 
         cy.get('[data-cypress="circle"]')
           .eq(curIndex)
@@ -52,6 +56,7 @@ describe("Queue-page works correctly", () => {
           .should("have.css", "border-color", changingColor);
 
         cy.wait(SHORT_DELAY_IN_MS);
+        checkNoLoader(cy.get("button").eq(2));
         cy.get('[data-cypress="circle-color"]')
           .eq(curIndex)
           .should("have.css", "border-color", defaultColor);
