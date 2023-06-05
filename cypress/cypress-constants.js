@@ -1,4 +1,7 @@
-export const mainURL = "http://localhost:3000"
+// Думал сделать фнукцию, которая будет генерировать массив вида ["have.css", selector, value]
+// дабы использовать её с деструктуризацией внутри should. Это имеет смысл или лишнее усложнение?
+
+export const mainURL = "http://localhost:3000";
 
 export const defaultColor = "rgb(0, 50, 255)";
 export const changingColor = "rgb(210, 82, 225)";

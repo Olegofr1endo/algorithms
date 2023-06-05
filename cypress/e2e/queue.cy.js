@@ -29,7 +29,8 @@ describe("Queue-page works correctly", () => {
       cy.get('[data-cypress="circle"]')
         .eq(curIndex)
         .should("contain", "tail")
-        .and("contain", curIndex);
+        .and("contain", curIndex)
+        .and("contain", arrayMaxFilled[additionalStep]);
       cy.get('[data-cypress="circle-color"]')
         .eq(curIndex)
         .should("have.css", "border-color", changingColor);
@@ -64,7 +65,7 @@ describe("Queue-page works correctly", () => {
           .eq(curIndex)
           .should("not.contain", curIndex)
           .and("not.contain", "head")
-          .and("not.contain", arrayMaxFilled[curIndex]);
+          .and("not.contain", arrayMaxFilled[removingStep]);
         removingStep++;
       }
       additionalStep++;

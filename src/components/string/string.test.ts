@@ -18,25 +18,25 @@ const testSuccessResult:TValueAndStatus<string>[] = [
 
 describe("String component tests",()=>{
     test("empty string", async ()=>{
-        await reverseString([], false).then((res)=>{
+         await reverseString([], false).then((res)=>{
             expect(res).toEqual([])
         })
     })
 
     test("one symbol", async ()=>{
-        await reverseString([testArr[0]], false).then(res=>{
+         await reverseString([testArr[0]], false).then(res=>{
             expect(res).toEqual([testSuccessResult[3]])
         })
     })
 
     test("even", async ()=>{
-        await reverseString(testArr, false).then(res=>{
+         await reverseString(testArr, false).then(res=>{
             expect(res).toEqual(testSuccessResult)
         })
     })
 
     test("uneven", async ()=>{
-        await reverseString(testArr.slice(1), false).then(res=>{
+         await reverseString(testArr.slice(1), false).then(res=>{
             expect(res).toEqual(testSuccessResult.slice(0, 3))
         })
     })
