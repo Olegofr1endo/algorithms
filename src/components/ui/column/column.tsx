@@ -13,7 +13,7 @@ export const Column: React.FC<ColumnProps> = ({
   state = ElementStates.Default,
   extraClass = "",
 }) => (
-  <div className={`${styles.content} ${extraClass}`}>
+  <div data-cypress="column" className={`${styles.content} ${extraClass}`}>
     <div
       className={`${styles.column} ${styles[state]}`}
       style={{ height: (320 * index) / 100 || 1 }}

@@ -6,13 +6,17 @@ import "./components/ui/common.css";
 import "./components/ui/box.css";
 import App from "./components/app/app";
 import reportWebVitals from "./reportWebVitals";
+import { createRoot } from 'react-dom/client';
 
-ReactDOM.render(
+const root = createRoot(document.getElementById("root")!)
+
+root.render(
   <React.StrictMode>
     <App />
-  </React.StrictMode>,
-  document.getElementById("root")
+  </React.StrictMode>
 );
+
+
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

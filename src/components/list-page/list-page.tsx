@@ -20,7 +20,7 @@ const initialState:TListState<string> = {
 
 export const ListPage: React.FC = () => {
   const [state, setState] = useState<TListState<string>>(initialState)
-  const [linkedList] = useState(new LinkedList(9, randomArr(1,6,9999)))
+  const [linkedList] = useState(new LinkedList(9, randomArr(3,6,9999)))
   const result = state.result.map((item, index)=>{
     const head = index === 0 ? "head" : ""
     const tail = index === state.result.length - 1 ? "tail" : ""

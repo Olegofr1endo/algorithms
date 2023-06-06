@@ -30,12 +30,20 @@ export const SortingPage: React.FC = () => {
     genNewArr()
   }, []);
 
+  const sortCallback = (arr: TValueAndStatus<number>[]) =>{
+    setSettings({...settings, result: arr})
+  }
+
   useEffect(()=>{
     if(settings.onSort && settings.sortDirection){
       if(settings.radio === "selection"){
-        selectionSort([...settings.result], settings.sortDirection, setSettings, settings)
+        selectionSort([...settings.result], settings.sortDirection, true, sortCallback).then(res=>{
+          setSettings({...settings, result: res, onSort: false, sortDirection: null})
+        })
       } else {
-        bubbleSort([...settings.result], settings.result.length ,0 ,settings.sortDirection, setSettings, settings)
+        bubbleSort([...settings.result], settings.result.length ,0 ,settings.sortDirection, true, sortCallback).then(res=>{
+          setSettings({...settings, result: res, onSort: false, sortDirection: null})
+        })
       }
     }
     return ()=>{

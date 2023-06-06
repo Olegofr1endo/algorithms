@@ -8,6 +8,7 @@ import { DELAY_IN_MS } from "../../constants/delays";
 import { ElementStates } from "../../types/element-states";
 import { TValueAndStatus } from "../../types/data";
 import { cleanup } from "@testing-library/react";
+import { reverseString } from "../../utils/utils";
 
 
 type TStateTtype = {
@@ -25,50 +26,16 @@ export const StringComponent: React.FC = () => {
     return <Circle key={index} state={item.status} letter={item.value} />
   });
 
+  const reverseCallback = (arr:TValueAndStatus<string>[])=>{
+    setSettings({...settings, result: arr})
+  }
+
 
   useEffect(()=>{
     if(settings.inProgress){
-      const res = settings.result
-      const {length} = res;
-      let firtsIndex = 0
-      let lastIndex = length - 1;
-      let buf = res[lastIndex];
-      setTimeout(()=>{
-        if(res.length === 1){
-          res[0].status = ElementStates.Modified
-          setSettings({...initState,result:res, visible: true})
-          return
-        }
-        res[firtsIndex].status = ElementStates.Changing
-        res[lastIndex].status = ElementStates.Changing
-        setSettings({...settings, result: res})
-        const interval = setInterval(()=>{
-          if(firtsIndex < lastIndex){
-          buf = res[firtsIndex];
-          res[firtsIndex] = res[lastIndex]
-          res[lastIndex] = buf;
-          res[firtsIndex].status = ElementStates.Modified;
-          res[lastIndex].status = ElementStates.Modified;
-          if(res[firtsIndex + 1].status !== ElementStates.Modified){
-            res[firtsIndex + 1].status = ElementStates.Changing;
-          }
-          if(res[lastIndex - 1].status !== ElementStates.Modified){
-            res[lastIndex - 1].status = ElementStates.Changing;
-          }
-          firtsIndex++;
-          lastIndex--;
-          setSettings({...settings, result:res})
-          if(firtsIndex >= lastIndex){
-            res[firtsIndex].status = ElementStates.Modified
-            clearInterval(interval)
-            setSettings({...initState,result:res, visible: true})
-          }
-          }
-        }, DELAY_IN_MS)
-        return ()=>{
-          cleanup()
-        }
-      }, DELAY_IN_MS)
+      reverseString(settings.result, true, reverseCallback).then((res)=>{
+        setSettings({...settings, result: res, inProgress: false, string: ""})
+      })
     }
   }, [settings.inProgress])
 

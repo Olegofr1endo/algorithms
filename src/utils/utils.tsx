@@ -16,11 +16,42 @@ export const randomArr: (min:number, max: number, maxNum:number) => string[] = (
     return arr
 }
 
+let delay = async (delay: number)=>{
+    return new Promise((res, rej)=>{
+        setTimeout(res, delay)
+    })
+}
+
 
 const swap: (arr: Array<any>, index1: number, index2: number) => void = (arr, index1, index2) =>{
     let buf = arr[index1];
     arr[index1] = arr[index2]
     arr[index2] = buf
+}
+
+export const reverseString = async (strArr: TValueAndStatus<string>[], isDelay:boolean, callback?: (arr:TValueAndStatus<string>[])=>void) => {
+    if(strArr.length === 0){
+        return strArr
+    }
+    strArr = [...strArr]
+    let a = 0;
+    let b = strArr.length - 1;
+    isDelay && await delay(DELAY_IN_MS)
+    while(a < b){
+        strArr[b].status = ElementStates.Changing;
+        strArr[a].status = ElementStates.Changing;
+        callback && callback(strArr)
+        await delay(DELAY_IN_MS)
+        swap(strArr, a, b)
+        strArr[b].status = ElementStates.Modified;
+        strArr[a].status = ElementStates.Modified;
+        a++;
+        b--
+    }
+    if(a === b){
+        strArr[a].status = ElementStates.Modified
+    }
+    return strArr
 }
 
 export const getFibonacciNumbers: (index:number)=>number[] = (index) => {
@@ -36,13 +67,15 @@ export const getFibonacciNumbers: (index:number)=>number[] = (index) => {
 
 // Функции анимации сортировки. в if-блоках направление сортировки
 
-export const selectionSort:(arr:TValueAndStatus<number>[], direction:Direction, setState:React.Dispatch<any>, state:object)=> void = (arr, direction, setState, state) =>{
-    let a = 0; // Индекс текущего элемента при переборе 
-    let b = 0; // Индекс позиции, на которую встанет найденый элемент 
-    let current: number = 0 // Индекс найденного наименьшего/наимобльшего
-    const interval = setInterval(()=>{
-
-        if(a>=arr.length - 1){ // Условие для перехода на новую итерацию поиска по массиву
+export const selectionSort = async (arr:TValueAndStatus<number>[], direction:Direction, isDelay: boolean, callback?: (arr:TValueAndStatus<number>[])=>void) => {
+    if(arr.length === 0){
+        return arr
+    }
+    let a = 0;
+    let b = 0;
+    let current = 0;
+    while (b < arr.length - 1){
+        if(a>=arr.length - 1){
             if(direction === Direction.Ascending ? arr[current].value >= arr[a].value : arr[current].value <= arr[a].value){
                 arr[current].status = ElementStates.Default
                 current = a
@@ -56,44 +89,46 @@ export const selectionSort:(arr:TValueAndStatus<number>[], direction:Direction, 
             a = b;
             current = b
             arr[current].status = ElementStates.Changing;
-            setState({...state, result: arr})
-        } else if(direction === Direction.Ascending ? arr[current].value >= arr[a].value : arr[current].value <= arr[a].value) { // Условие новом найденном наибольшем/наименьшем
+            callback && callback(arr)
+        } else if(direction === Direction.Ascending ? arr[current].value >= arr[a].value : arr[current].value <= arr[a].value) {
             arr[current].status = ElementStates.Default;
             current = a
             arr[current].status = ElementStates.Changing;
             a++
             arr[a].status = ElementStates.Changing;
-            setState({...state, result: arr})
-        } else { // Условие перехода на следующий элемент в текущей итерации 
+            callback && callback(arr)
+        } else {
             arr[a].status = ElementStates.Default;
             a++
             arr[a].status = ElementStates.Changing;
-            setState({...state, result: arr})
+            callback && callback(arr)
         }
-
-        if(b >= arr.length - 1){ // Услвие выхода из цикла
-            arr[b-1].status = ElementStates.Modified
-            arr[b].status = ElementStates.Modified
-            setState({...state, sortDirection: null, result: arr, onSort: false})
-            clearInterval(interval)
-            return
-        }
-    }, DELAY_IN_MS)
+        isDelay && await delay(DELAY_IN_MS);
+    }
+    if(arr.length !== 1){
+        arr[b-1].status = ElementStates.Modified
+    }
+    arr[b].status = ElementStates.Modified
+    callback && callback(arr)
+    return arr
 }
 
-export const bubbleSort:(arr:TValueAndStatus<number>[], finishIndex: number, currIndex: number, direction:Direction, setState:React.Dispatch<any>, state:object)=> void = (arr, finishIndex, currIndex, direction, setState, state) =>{
-    setTimeout(()=>{
+
+export const bubbleSort:(arr:TValueAndStatus<number>[], finishIndex: number, currIndex: number, direction:Direction, isDelay: boolean, callback?: (arr:TValueAndStatus<number>[])=>void)=> Promise<TValueAndStatus<number>[]> = async (arr, finishIndex, currIndex, direction, isDelay, callback) =>{
+    if(arr.length === 0){
+        return arr
+    }
+    isDelay && await delay(DELAY_IN_MS);
     let next: number = currIndex+1
     if(finishIndex <= 1){ // Условие выхода из рекурсии
         arr[currIndex].status = ElementStates.Modified
-        setState({...state, sortDirection: null , result: arr, onSort: false})
-        return
+        return arr
     }
     if(next >= finishIndex){ // Условие для перехода на новую итерацию поиска по массиву
         arr[currIndex].status = ElementStates.Modified
         arr[currIndex - 1].status = ElementStates.Default
-        setState({...state, result: arr})
-        return bubbleSort(arr, finishIndex - 1, 0, direction, setState, state)
+        callback && callback(arr)
+        return bubbleSort(arr, finishIndex - 1, 0, direction, isDelay, callback)
     }
 
     arr[currIndex].status = ElementStates.Changing;
@@ -104,13 +139,12 @@ export const bubbleSort:(arr:TValueAndStatus<number>[], finishIndex: number, cur
     }
     if(direction === Direction.Ascending ? arr[next].value < arr[currIndex].value : arr[next].value > arr[currIndex].value){
         swap(arr, next ,currIndex)
-        setState({...state, result: arr})
-        return bubbleSort(arr, finishIndex, currIndex + 1, direction, setState, state)
+        callback && callback(arr)
+        return bubbleSort(arr, finishIndex, currIndex + 1, direction, isDelay, callback)
     } else {
-        setState({...state, result: arr})
-        return bubbleSort(arr, finishIndex, currIndex + 1, direction, setState, state)
+        callback && callback(arr)
+        return bubbleSort(arr, finishIndex, currIndex + 1, direction, isDelay, callback)
     }
-    }, DELAY_IN_MS)
 }
 
 // Анимация добавления элемента
